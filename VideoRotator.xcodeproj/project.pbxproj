@@ -8,22 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		E8970F951CACA4A600E7824F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8970F941CACA4A600E7824F /* AppDelegate.swift */; };
-		E8970F971CACA4A600E7824F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8970F961CACA4A600E7824F /* ViewController.swift */; };
+		E8970F971CACA4A600E7824F /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8970F961CACA4A600E7824F /* CollectionController.swift */; };
 		E8970F9A1CACA4A600E7824F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8970F981CACA4A600E7824F /* Main.storyboard */; };
 		E8970F9D1CACA4A600E7824F /* VideoRotator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8970F9B1CACA4A600E7824F /* VideoRotator.xcdatamodeld */; };
 		E8970F9F1CACA4A600E7824F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8970F9E1CACA4A600E7824F /* Assets.xcassets */; };
 		E8970FA21CACA4A600E7824F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8970FA01CACA4A600E7824F /* LaunchScreen.storyboard */; };
+		E8970FB61CADC89800E7824F /* EditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8970FB51CADC89800E7824F /* EditorController.swift */; };
+		E8970FBE1CADCAC400E7824F /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8970FBD1CADCAC400E7824F /* AboutController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E8970F911CACA4A600E7824F /* VideoRotator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoRotator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8970F941CACA4A600E7824F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E8970F961CACA4A600E7824F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E8970F961CACA4A600E7824F /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
 		E8970F991CACA4A600E7824F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E8970F9C1CACA4A600E7824F /* VideoRotator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VideoRotator.xcdatamodel; sourceTree = "<group>"; };
 		E8970F9E1CACA4A600E7824F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8970FA11CACA4A600E7824F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E8970FA31CACA4A600E7824F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8970FB51CADC89800E7824F /* EditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorController.swift; sourceTree = "<group>"; };
+		E8970FBD1CADCAC400E7824F /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +61,40 @@
 			isa = PBXGroup;
 			children = (
 				E8970F941CACA4A600E7824F /* AppDelegate.swift */,
-				E8970F961CACA4A600E7824F /* ViewController.swift */,
 				E8970F981CACA4A600E7824F /* Main.storyboard */,
-				E8970F9E1CACA4A600E7824F /* Assets.xcassets */,
 				E8970FA01CACA4A600E7824F /* LaunchScreen.storyboard */,
+				E8970FB91CADC8A000E7824F /* Controllers */,
+				E8970FC21CADCB9500E7824F /* Views */,
+				E8970FC31CADCBA000E7824F /* Models */,
+				E8970F9E1CACA4A600E7824F /* Assets.xcassets */,
 				E8970FA31CACA4A600E7824F /* Info.plist */,
 				E8970F9B1CACA4A600E7824F /* VideoRotator.xcdatamodeld */,
 			);
 			path = VideoRotator;
+			sourceTree = "<group>";
+		};
+		E8970FB91CADC8A000E7824F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E8970F961CACA4A600E7824F /* CollectionController.swift */,
+				E8970FB51CADC89800E7824F /* EditorController.swift */,
+				E8970FBD1CADCAC400E7824F /* AboutController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		E8970FC21CADCB9500E7824F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E8970FC31CADCBA000E7824F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +169,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8970FB61CADC89800E7824F /* EditorController.swift in Sources */,
+				E8970FBE1CADCAC400E7824F /* AboutController.swift in Sources */,
 				E8970F9D1CACA4A600E7824F /* VideoRotator.xcdatamodeld in Sources */,
-				E8970F971CACA4A600E7824F /* ViewController.swift in Sources */,
+				E8970F971CACA4A600E7824F /* CollectionController.swift in Sources */,
 				E8970F951CACA4A600E7824F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,8 +287,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = VideoRotator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.egorio.VideoRotator;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.egorio.video-rotator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -266,8 +299,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = VideoRotator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.egorio.VideoRotator;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.egorio.video-rotator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
