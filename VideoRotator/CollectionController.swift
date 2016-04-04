@@ -12,6 +12,9 @@ class CollectionController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
+    var storage: VideoStorage = LocalVideoStorage()
+    var videos: [Video] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,59 +22,88 @@ class CollectionController: UIViewController {
         collectionView.dataSource = self
     }
 
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
 
         configureCellSize()
+
+        // Load videos from storage
+        storage.getVideos({ (videos, pages, error) in
+            self.runInMainQueue({
+                guard error == nil else {
+                    return self.showErrorAlert("Videos not found", message: "Please ...")
+                }
+
+                self.videos = videos
+                self.collectionView.reloadData()
+            })
+        })
     }
 
     /*
-     * Recaltulate cell sizes on rotating
+     * Recaltulates cell sizes on rotating
      */
     override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         configureCellSize()
     }
 
+    /*
+     * Configures cells and spaces sizes thru collection view flow layout
+     */
     func configureCellSize() {
-        let cellsSpacing: CGFloat = 4
-        let cellsPerLine: CGFloat = UIDevice.currentDevice().orientation.isLandscape ? 5 : 3
-        let cellSize = (collectionView.bounds.width - ((cellsPerLine - 1) * cellsSpacing)) / cellsPerLine
-        
-        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        flowLayout.itemSize = CGSize(width: cellSize, height: cellSize)
-        flowLayout.minimumInteritemSpacing = cellsSpacing;
-        flowLayout.minimumLineSpacing = cellsSpacing;
-        flowLayout.invalidateLayout()
+        let screen = UIScreen.mainScreen()
+        let cellsSpacing: CGFloat = Constants.collectionCellsSpacing
+        let cellsPerLine: CGFloat = screen.bounds.width < screen.bounds.height
+            ? Constants.collectionCellsPerRowPortrait
+            : Constants.collectionCellsPerRowLandscape
+        let cellSize = (screen.bounds.width - ((cellsPerLine + 1) * cellsSpacing)) / cellsPerLine
+
+        UIView.performWithoutAnimation({
+            let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+            flowLayout.itemSize = CGSize(width: cellSize, height: cellSize)
+            flowLayout.minimumLineSpacing = cellsSpacing;
+            flowLayout.minimumInteritemSpacing = cellsSpacing;
+            flowLayout.sectionInset = UIEdgeInsetsMake(10, cellsSpacing, 50, cellsSpacing)
+            flowLayout.invalidateLayout()
+        })
     }
 }
 
 extension CollectionController: UICollectionViewDelegate, UICollectionViewDataSource {
 
+    /*
+     * Returns the number of items in the specified section
+     */
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return videos.count
     }
 
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("EditorController")
-
-        navigationController?.pushViewController(controller, animated: true)
-    }
-
+    /*
+     * Returns the cell that corresponds to the specified item in the collection view
+     */
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("VideoCell", forIndexPath: indexPath)
+        let video = videos[indexPath.item]
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("VideoCell", forIndexPath: indexPath) as! VideoCell
+
+        storage.getPreviewImage(video, size: Constants.videoThumbnailSize) { (image, error) in
+            self.runInMainQueue({
+                cell.configure(image)
+            })
+        }
 
         return cell
     }
 
     /*
-     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-
-     let cellsPerLine: CGFloat = UIDevice.currentDevice().orientation.isLandscape ? 5 : 3
-
-     print(cellsPerLine)
-
-     let size = (collectionView.bounds.width - ((cellsPerLine - 1) * 10)) / cellsPerLine
-     return CGSize(width: size, height: size)
-     }
+     * Handles cell selection
      */
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let video = videos[indexPath.item]
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("EditorController") as! EditorController
+
+        controller.storage = storage
+        controller.video = video
+
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }

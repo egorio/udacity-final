@@ -9,4 +9,7 @@
 import UIKit
 
 class AboutController: UIViewController {
+    @IBAction func goBack(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
 }
